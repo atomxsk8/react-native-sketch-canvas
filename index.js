@@ -205,7 +205,19 @@ export default class RNSketchCanvas extends React.Component {
     return (
       <View style={this.props.containerStyle}>
         <View style={{ flexDirection: 'row' }}>
-          <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-start' }}>
+          {
+            this.props.tools && React.isValidElement(this.props.tools) ? 
+            React.cloneElement(this.props.tools, { 
+              onErase : () => { this.setState({ color: '#00000000' }) },
+              onChangeStrokeWidth : () => { this.nextStrokeWidth() },
+              strokeWidth: this.state.strokeWidth, 
+              strokeColor: this.state.color,
+              onUndo : () => { this.props.onUndoPressed(this.undo()) },
+              onClear : () => { this.clear(); this.props.onClearPressed() },
+              onSave : () => { this.save() },
+            }) : null
+          }
+          {/* <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-start' }}>
             {this.props.closeComponent && (
               <TouchableOpacity onPress={() => { this.props.onClosePressed() }}>
                 {this.props.closeComponent}
@@ -242,7 +254,7 @@ export default class RNSketchCanvas extends React.Component {
                 {this.props.saveComponent}
               </TouchableOpacity>)
             }
-          </View>
+          </View> */}
         </View>
         <SketchCanvas
           ref={ref => this._sketchCanvas = ref}
