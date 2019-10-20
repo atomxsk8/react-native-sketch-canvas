@@ -215,6 +215,7 @@ export default class RNSketchCanvas extends React.Component {
               onUndo : () => { this.props.onUndoPressed(this.undo()) },
               onClear : () => { this.clear(); this.props.onClearPressed() },
               onSave : () => { this.save() },
+              setStrokeColor : (color) => { this.setState({ color }) },
             }) : null
           }
           {/* <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-start' }}>
